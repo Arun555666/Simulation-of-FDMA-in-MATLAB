@@ -1,0 +1,34 @@
+clc; clear; close all;
+
+SNR = 0:2:20;
+BER = zeros(size(SNR));
+
+for i = 1:length(SNR)
+    H = (randn(2)+1i*randn(2))/sqrt(2);      % Channel
+    gain(i) = mean(abs(H(:)).^2);            % Channel Gain
+
+    tx = randi([0 1],1000,1);
+    modSig = 2*tx-1;
+
+    noise = randn(1000,1)/sqrt(10^(SNR(i)/10));
+    rx = modSig + noise;
+
+    rxBits = rx>0;
+    BER(i) = sum(tx~=rxBits)/1000;
+
+    throughput(i) = (1-BER(i))*100;          % Mbps (example)
+    latency(i) = 1/throughput(i);            % ms (example)
+end
+
+figure;
+subplot(2,2,1), semilogy(SNR,BER,'o-'), grid on
+title('BER vs SNR')
+
+subplot(2,2,2), plot(SNR,gain,'*-'), grid on
+title('Channel Gain')
+
+subplot(2,2,3), plot(SNR,throughput,'s-'), grid on
+title('Throughput')
+
+subplot(2,2,4), plot(SNR,latency,'d-'), grid on
+title('Latency')
