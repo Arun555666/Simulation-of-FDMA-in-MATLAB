@@ -1,0 +1,60 @@
+clc;
+clear;
+close all;
+
+%% Data
+time = 1:10;
+soil_moisture = [30 35 28 25 20 18 22 30 40 45];
+
+threshold = 40;
+
+% Moisture status: 1 = Wet, 0 = Dry
+moisture_status = soil_moisture >= threshold;
+
+% Pump status: 1 = ON, 0 = OFF
+pump_status = soil_moisture < threshold;
+
+%% Single Figure with 4 Outputs
+figure;
+
+% -------- Graph 1: Soil Moisture Variation --------
+subplot(2,2,1);
+plot(time, soil_moisture, '-o', 'LineWidth', 2);
+grid on;
+hold on;
+yline(threshold, 'r--', 'Threshold');
+title('Soil Moisture Monitoring');
+xlabel('Time (Hours)');
+ylabel('Soil Moisture (%)');
+
+% -------- Graph 2: Moisture Status --------
+subplot(2,2,2);
+stem(time, moisture_status, 'filled', 'LineWidth', 2);
+grid on;
+title('Soil Condition Status');
+xlabel('Time (Hours)');
+ylabel('Status');
+ylim([-0.2 1.2]);
+yticks([0 1]);
+yticklabels({'Dry','Wet'});
+
+% -------- Graph 3: Soil Moisture vs Pump Control --------
+subplot(2,2,3);
+plot(time, soil_moisture, '-o', 'LineWidth', 2);
+grid on;
+hold on;
+yline(threshold, 'r--', 'Threshold');
+title('Soil Moisture vs Pump Control');
+xlabel('Time (Hours)');
+ylabel('Soil Moisture (%)');
+
+% -------- Graph 4: Pump Status --------
+subplot(2,2,4);
+stem(time, pump_status, 'filled', 'LineWidth', 2);
+grid on;
+title('Water Pump Status');
+xlabel('Time (Hours)');
+ylabel('Pump Status');
+ylim([-0.2 1.2]);
+yticks([0 1]);
+yticklabels({'OFF','ON'});
