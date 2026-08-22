@@ -1,0 +1,137 @@
+clc;
+clear;
+close all;
+
+% =========================================================
+% COMMON VEHICLE DATA
+% =========================================================
+
+% Vehicle Speed (km/h)
+speed = 20:20:120;
+
+% Vehicle Index
+vehicle = 1:6;
+
+% =========================================================
+% 1. END-TO-END LATENCY
+% =========================================================
+
+latency = [18 16 14 12 10 9];
+
+disp('======================================================');
+disp('        VEHICLE SPEED vs END-TO-END LATENCY');
+disp('======================================================');
+disp('Speed(km/h)    Latency(ms)');
+disp([speed' latency']);
+
+% =========================================================
+% 2. PACKET DELIVERY RATIO
+% =========================================================
+
+PDR = [99 98 97 95 93 90];
+
+disp(' ');
+disp('======================================================');
+disp('        VEHICLE SPEED vs PACKET DELIVERY RATIO');
+disp('======================================================');
+disp('Speed(km/h)    PDR(%)');
+disp([speed' PDR']);
+
+% =========================================================
+% 3. COMMUNICATION RANGE
+% =========================================================
+
+speed2 = [30 45 60 75 90 105];
+range = [280 260 240 220 200 180];
+
+disp(' ');
+disp('======================================================');
+disp('        VEHICLE SPEED vs COMMUNICATION RANGE');
+disp('======================================================');
+disp('Vehicle    Speed(km/h)    Range(m)');
+disp([vehicle' speed2' range']);
+
+% =========================================================
+% SINGLE WINDOW - ALL 6 GRAPHS
+% =========================================================
+
+figure('Name','Vehicular Communication Performance',...
+       'NumberTitle','off');
+
+% =========================================================
+% ROW 1 - LATENCY
+% =========================================================
+
+subplot(3,2,1);
+
+plot(speed,latency,'-o','LineWidth',2);
+
+title('Vehicle Speed vs End-to-End Latency');
+xlabel('Vehicle Speed (km/h)');
+ylabel('Latency (ms)');
+grid on;
+
+
+subplot(3,2,2);
+
+plot(1:length(latency),latency,'-s','LineWidth',2);
+
+title('Latency Variation Across Vehicles');
+xlabel('Vehicle Index');
+ylabel('End-to-End Latency (ms)');
+grid on;
+
+
+% =========================================================
+% ROW 2 - PACKET DELIVERY RATIO
+% =========================================================
+
+subplot(3,2,3);
+
+plot(speed,PDR,'-o','LineWidth',2);
+
+title('Vehicle Speed vs Packet Delivery Ratio');
+xlabel('Vehicle Speed (km/h)');
+ylabel('Packet Delivery Ratio (%)');
+grid on;
+
+
+subplot(3,2,4);
+
+plot(1:length(PDR),PDR,'-s','LineWidth',2);
+
+title('Packet Delivery Ratio Across Vehicles');
+xlabel('Vehicle Index');
+ylabel('Packet Delivery Ratio (%)');
+grid on;
+
+
+% =========================================================
+% ROW 3 - COMMUNICATION RANGE
+% =========================================================
+
+subplot(3,2,5);
+
+plot(vehicle,speed2,'-o','LineWidth',2);
+
+title('Vehicle Speed of Different Vehicles');
+xlabel('Vehicle Index');
+ylabel('Vehicle Speed (km/h)');
+grid on;
+
+
+subplot(3,2,6);
+
+plot(speed2,range,'-s','LineWidth',2);
+
+title('Vehicle Speed vs Communication Range');
+xlabel('Vehicle Speed (km/h)');
+ylabel('Communication Range (m)');
+grid on;
+
+
+% =========================================================
+% OVERALL TITLE
+% =========================================================
+
+sgtitle('Vehicular Communication Performance Analysis');
