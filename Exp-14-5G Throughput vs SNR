@@ -1,0 +1,148 @@
+clc;
+clear;
+close all;
+
+% =========================================================
+% COMMON SNR VALUES
+% =========================================================
+
+SNR = 0:5:30;
+
+% =========================================================
+% 1. 5G THROUGHPUT
+% =========================================================
+
+Max_TP = 100;
+
+Throughput = Max_TP * (1-exp(-SNR/10));
+
+disp('======================================================');
+disp('              5G THROUGHPUT RESULTS');
+disp('======================================================');
+disp('SNR(dB)    Throughput(Mbps)');
+disp([SNR' Throughput']);
+
+
+% =========================================================
+% 2. BER AND RELIABILITY
+% =========================================================
+
+BER = [0.30 0.18 0.10 0.05 0.02 0.008 0.001];
+
+Reliability = (1-BER)*100;
+
+disp(' ');
+disp('======================================================');
+disp('              BER AND RELIABILITY');
+disp('======================================================');
+disp('SNR(dB)    BER        Reliability(%)');
+disp([SNR' BER' Reliability']);
+
+
+% =========================================================
+% 3. MODULATION AND SPECTRAL EFFICIENCY
+% =========================================================
+
+Modulation = {'QPSK','16-QAM','64-QAM','256-QAM'};
+
+Mod_SNR = [5 10 18 25];
+
+Efficiency = [2 4 6 8];
+
+disp(' ');
+disp('======================================================');
+disp('       MODULATION AND SPECTRAL EFFICIENCY');
+disp('======================================================');
+
+disp(table(Modulation',Mod_SNR',Efficiency', ...
+    'VariableNames',{'Modulation','SNR_dB','Efficiency'}));
+
+
+% =========================================================
+% SINGLE WINDOW - ALL 6 GRAPHS
+% =========================================================
+
+figure('Name','5G Communication Performance Analysis',...
+       'NumberTitle','off');
+
+
+% =========================================================
+% ROW 1 - THROUGHPUT
+% =========================================================
+
+subplot(3,2,1);
+
+plot(SNR,Throughput,'-o','LineWidth',2);
+
+title('5G Throughput vs SNR');
+xlabel('Signal-to-Noise Ratio (dB)');
+ylabel('Throughput (Mbps)');
+grid on;
+
+
+subplot(3,2,2);
+
+bar(Throughput);
+
+title('Throughput at Different SNR Levels');
+xlabel('SNR Index');
+ylabel('Throughput (Mbps)');
+grid on;
+
+
+% =========================================================
+% ROW 2 - BER AND RELIABILITY
+% =========================================================
+
+subplot(3,2,3);
+
+semilogy(SNR,BER,'-o','LineWidth',2);
+
+title('SNR vs Bit Error Rate in 5G');
+xlabel('Signal-to-Noise Ratio (dB)');
+ylabel('Bit Error Rate (BER)');
+grid on;
+
+
+subplot(3,2,4);
+
+plot(SNR,Reliability,'-s','LineWidth',2);
+
+title('SNR vs Communication Reliability');
+xlabel('Signal-to-Noise Ratio (dB)');
+ylabel('Reliability (%)');
+grid on;
+
+
+% =========================================================
+% ROW 3 - MODULATION
+% =========================================================
+
+subplot(3,2,5);
+
+plot(1:4,Mod_SNR,'-s','LineWidth',2);
+
+xticks(1:4);
+xticklabels(Modulation);
+
+title('Required SNR for Different Modulation Schemes');
+xlabel('Modulation Scheme');
+ylabel('Required SNR (dB)');
+grid on;
+
+
+subplot(3,2,6);
+
+plot(Mod_SNR,Efficiency,'-o','LineWidth',2);
+
+title('SNR vs Spectral Efficiency');
+xlabel('Signal-to-Noise Ratio (dB)');
+ylabel('Spectral Efficiency (bits/s/Hz)');
+grid on;
+
+
+% =========================================================
+% OVERALL TITLE
+% =========================================================
+
+sgtitle('5G Communication Performance Analysis');
