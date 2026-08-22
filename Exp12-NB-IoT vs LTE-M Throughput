@@ -1,0 +1,104 @@
+clc;
+clear;
+close all;
+
+% =========================================================
+% SNR VALUES
+% =========================================================
+SNR = 0:5:30;
+
+% =========================================================
+% THROUGHPUT DATA
+% =========================================================
+NB_IoT_Throughput = 0.05*(1-exp(-SNR/8));
+LTE_M_Throughput  = 1.2*(1-exp(-SNR/8));
+
+% =========================================================
+% LATENCY DATA
+% =========================================================
+NB_IoT_Latency = [180 160 145 130 120 110 100];
+LTE_M_Latency  = [90 80 70 60 50 45 40];
+
+% =========================================================
+% PACKET DELIVERY RATIO DATA
+% =========================================================
+NB_IoT_PDR = [82 86 89 92 95 97 99];
+LTE_M_PDR  = [88 91 94 96 98 99 100];
+
+% =========================================================
+% DISPLAY RESULTS IN COMMAND WINDOW
+% =========================================================
+
+disp('==========================================================');
+disp('                    THROUGHPUT');
+disp('==========================================================');
+disp(' SNR(dB)    NB-IoT(Mbps)    LTE-M(Mbps)');
+disp([SNR' NB_IoT_Throughput' LTE_M_Throughput']);
+
+disp(' ');
+disp('==========================================================');
+disp('                      LATENCY');
+disp('==========================================================');
+disp(' SNR(dB)    NB-IoT(ms)    LTE-M(ms)');
+disp([SNR' NB_IoT_Latency' LTE_M_Latency']);
+
+disp(' ');
+disp('==========================================================');
+disp('                PACKET DELIVERY RATIO');
+disp('==========================================================');
+disp(' SNR(dB)    NB-IoT(%)    LTE-M(%)');
+disp([SNR' NB_IoT_PDR' LTE_M_PDR']);
+
+% =========================================================
+% SINGLE WINDOW - ALL 6 GRAPHS
+% =========================================================
+
+figure('Name','NB-IoT vs LTE-M Performance','NumberTitle','off');
+
+% -------- ROW 1 : THROUGHPUT --------
+subplot(3,2,1);
+plot(SNR,NB_IoT_Throughput,'-o','LineWidth',2);
+title('NB-IoT Throughput vs SNR');
+xlabel('SNR (dB)');
+ylabel('Throughput (Mbps)');
+grid on;
+
+subplot(3,2,2);
+plot(SNR,LTE_M_Throughput,'-s','LineWidth',2);
+title('LTE-M Throughput vs SNR');
+xlabel('SNR (dB)');
+ylabel('Throughput (Mbps)');
+grid on;
+
+% -------- ROW 2 : LATENCY --------
+subplot(3,2,3);
+plot(SNR,NB_IoT_Latency,'-o','LineWidth',2);
+title('NB-IoT Latency vs SNR');
+xlabel('SNR (dB)');
+ylabel('Latency (ms)');
+grid on;
+
+subplot(3,2,4);
+plot(SNR,LTE_M_Latency,'-s','LineWidth',2);
+title('LTE-M Latency vs SNR');
+xlabel('SNR (dB)');
+ylabel('Latency (ms)');
+grid on;
+
+% -------- ROW 3 : PACKET DELIVERY RATIO --------
+subplot(3,2,5);
+plot(SNR,NB_IoT_PDR,'-o','LineWidth',2);
+title('NB-IoT Packet Delivery Ratio vs SNR');
+xlabel('SNR (dB)');
+ylabel('PDR (%)');
+grid on;
+
+subplot(3,2,6);
+plot(SNR,LTE_M_PDR,'-s','LineWidth',2);
+title('LTE-M Packet Delivery Ratio vs SNR');
+xlabel('SNR (dB)');
+ylabel('PDR (%)');
+grid on;
+
+% Overall title
+sgtitle('Performance Comparison of NB-IoT and LTE-M');
