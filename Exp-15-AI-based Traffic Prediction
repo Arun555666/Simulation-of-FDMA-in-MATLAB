@@ -1,0 +1,149 @@
+clc;
+clear;
+close all;
+
+% =========================================================
+% 1. AI PREDICTION ACCURACY AND TRAFFIC
+% =========================================================
+
+% Time samples
+t = 1:10;
+
+% Prediction Accuracy (%)
+Accuracy = [90 91 92 93 94 95 96 97 98 99];
+
+% Actual Network Traffic (Mbps)
+Traffic = [45 50 55 60 65 70 75 80 85 90];
+
+disp('======================================================');
+disp('       AI PREDICTION ACCURACY AND TRAFFIC');
+disp('======================================================');
+disp('Time    Accuracy(%)    Traffic(Mbps)');
+disp([t' Accuracy' Traffic']);
+
+
+% =========================================================
+% 2. ACTUAL AND PREDICTED TRAFFIC
+% =========================================================
+
+Actual = [50 55 60 62 68 70 75 80 85 90];
+
+Predicted = [49 54 61 63 67 71 74 81 84 89];
+
+% Squared Error
+SqError = (Actual - Predicted).^2;
+
+% Mean Squared Error
+MSE = mean(SqError);
+
+disp(' ');
+disp('======================================================');
+disp('        AI TRAFFIC PREDICTION ERROR');
+disp('======================================================');
+disp('Time    Actual(Mbps)    Predicted(Mbps)    Squared Error');
+disp([t' Actual' Predicted' SqError']);
+
+disp(['Mean Squared Error (MSE) = ', num2str(MSE)]);
+
+
+% =========================================================
+% 3. NETWORK THROUGHPUT AND UTILIZATION
+% =========================================================
+
+Throughput = [120 135 150 165 180 195 210 225 240 255];
+
+Utilization = [60 65 70 74 78 82 86 90 94 98];
+
+disp(' ');
+disp('======================================================');
+disp('        NETWORK THROUGHPUT AND UTILIZATION');
+disp('======================================================');
+disp('Time    Throughput(Mbps)    Utilization(%)');
+disp([t' Throughput' Utilization']);
+
+
+% =========================================================
+% SINGLE WINDOW - ALL 6 GRAPHS
+% =========================================================
+
+figure('Name','AI-Based Network Performance Analysis',...
+       'NumberTitle','off');
+
+
+% =========================================================
+% ROW 1 - PREDICTION ACCURACY AND TRAFFIC
+% =========================================================
+
+subplot(3,2,1);
+
+plot(t,Accuracy,'-o','LineWidth',2);
+
+title('AI Prediction Accuracy over Time');
+xlabel('Time Interval');
+ylabel('Prediction Accuracy (%)');
+grid on;
+
+
+subplot(3,2,2);
+
+bar(Traffic);
+
+title('Network Traffic Samples Used for AI Prediction');
+xlabel('Traffic Sample');
+ylabel('Traffic (Mbps)');
+grid on;
+
+
+% =========================================================
+% ROW 2 - PREDICTION ERROR
+% =========================================================
+
+subplot(3,2,3);
+
+plot(t,SqError,'-o','LineWidth',2);
+
+title('Squared Error of AI Traffic Prediction');
+xlabel('Time Interval');
+ylabel('Squared Error');
+grid on;
+
+
+subplot(3,2,4);
+
+bar(MSE);
+
+title('Mean Squared Error (MSE)');
+xlabel('AI Prediction Model');
+ylabel('MSE');
+grid on;
+
+
+% =========================================================
+% ROW 3 - THROUGHPUT AND UTILIZATION
+% =========================================================
+
+subplot(3,2,5);
+
+plot(t,Throughput,'-o','LineWidth',2);
+
+title('AI-Based Network Throughput');
+xlabel('Time Interval');
+ylabel('Throughput (Mbps)');
+grid on;
+
+
+subplot(3,2,6);
+
+plot(Throughput,Utilization,'-s','LineWidth',2);
+
+title('Throughput vs Network Utilization');
+xlabel('Network Throughput (Mbps)');
+ylabel('Network Utilization (%)');
+grid on;
+
+
+% =========================================================
+% OVERALL TITLE
+% =========================================================
+
+sgtitle('AI-Based Network Performance Analysis');
